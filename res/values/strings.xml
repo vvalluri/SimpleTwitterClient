@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Basic Twitter</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_photos">Flickr Photos</string>
+    <string name="login_label">Log in</string>
+    <string name="title_activity_timeline">TimelineActivity</string>
+    <string name="tweet_user">userfoo</string>
+    <string name="title_activity_tweet_compose">TweetComposeActivity</string>
+    <string name="lbl_compose_max">Max 140 chars</string>
+    <string name="title_activity_tweet_display">TweetDisplayActivity</string>
+    <string name="title_activity_tweet_reply">TweetReplyActivity</string>
+    <string name="lbl_time_str">Time String</string>
+    <string name="lbl_content_descp">Profile image content</string>
+
+</resources>

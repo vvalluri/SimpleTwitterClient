@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.codepath.apps.basictwitter.TweetComposeActivity" >
+
+    <item
+        android:id="@+id/miSendTweet"
+        android:icon="@drawable/compose_send"
+        android:showAsAction="always"
+        android:onClick="onTweetAction"
+        android:title="TweetNow">
+    </item>
+    
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+
+</menu>
