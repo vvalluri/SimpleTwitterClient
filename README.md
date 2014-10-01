@@ -27,5 +27,7 @@ Advanced user stories completed:
    - Icons are used
    - Added media to listview
    - Added favorites
-   -
+
+GIF walkthrough:
+
 
