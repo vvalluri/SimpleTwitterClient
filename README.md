@@ -27,6 +27,9 @@ Advanced user stories completed:
    - Icons are used
    - Added media to listview
    - Added favorites
+   - Added Parcelable
+   - Fixed the app closing issue by setting "noHistory" for login activity
+   - Fixed the User model duplicate records in SQL database
 
 GIF walkthrough:
 
