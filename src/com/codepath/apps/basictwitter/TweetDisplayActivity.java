@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.basictwitter.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 
 public class TweetDisplayActivity extends Activity {
@@ -29,6 +30,10 @@ public class TweetDisplayActivity extends Activity {
 		bar.setBackgroundDrawable(new ColorDrawable(Color.BLUE));
 		bar.setTitle(" ");
 		
+        // Create global configuration and initialize ImageLoader with this configuration
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
+        ImageLoader.getInstance().init(config);
+        
 	    // Get the tweet object
 	    //tweet = (Tweet)getIntent().getSerializableExtra("tweet");
 		tweet = (Tweet)getIntent().getParcelableExtra("tweet");

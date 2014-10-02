@@ -87,6 +87,9 @@ public class TimelineActivity extends Activity {
         	}
         });
         
+        // Create global configuration and initialize ImageLoader with this configuration
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
+        ImageLoader.getInstance().init(config);
  
         if (dbTweets != null) {
         	Log.d("debug", "DB Tweets count: " + dbTweets.size());
@@ -111,9 +114,7 @@ public class TimelineActivity extends Activity {
                 android.R.color.holo_orange_light, 
                 android.R.color.holo_red_light);
         
-     // Create global configuration and initialize ImageLoader with this configuration
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
-        ImageLoader.getInstance().init(config);
+
         // Populate account credentials
         populateAccountCred();
         
@@ -163,7 +164,7 @@ public class TimelineActivity extends Activity {
     		return;
     	}
     	
-		Client.getHomeTimeLineNext(in_lastMaxId, in_firstSinceId, new JsonHttpResponseHandler() {
+		Client.getHomeTimeLineNext(in_lastMaxId - 1, in_firstSinceId, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray jsonArr) {
 				Log.d("debug", "Get Next Test the Twitter Timeline API");
@@ -210,9 +211,10 @@ public class TimelineActivity extends Activity {
     	    }
     	    
     	    for (int i = 0; i < dbTweets.size(); i++) {
-    	    	if (i > 20) {
+    	    	/* if (i > 20) {
     	    		return;
     	    	}
+    	    	*/
     	    	aTweets.add(dbTweets.get(i));
     	    }
     	    
@@ -405,8 +407,9 @@ public class TimelineActivity extends Activity {
 		  Log.d("debug", "Recived compose response result ");
 	     // Extract name value from result extras
 		  if (i.hasExtra("Tweetresult")) {
-			  Tweet compTweet = (Tweet)i.getSerializableExtra("Tweetresult");
+			  Tweet compTweet = (Tweet)i.getParcelableExtra("Tweetresult");
 			  aTweets.insert(compTweet, 0);
+			  firstSinceId = compTweet.getUid();
 		  }
 	  }
 	} 
