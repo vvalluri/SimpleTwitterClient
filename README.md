@@ -32,5 +32,6 @@ Advanced user stories completed:
    - Fixed the User model duplicate records in SQL database
 
 GIF walkthrough:
+![alt tag](https://github.com/vvalluri/SimpleTwitterClient/blob/master/codepath-simpletwitterclient-3.gif)
 
 
