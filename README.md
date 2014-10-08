@@ -27,7 +27,10 @@ Optional:
 17. Advanced: User can search for tweets matching a particular query and see results (seeing issue with query string will try to fix)
 
 GIF walkthrough
+
+
 ![alt tag](https://github.com/vvalluri/SimpleTwitterClient/blob/master/codepath-simpletwitterclient-fragments-1.gif)
+
 
 
 
