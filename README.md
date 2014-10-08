@@ -1,3 +1,34 @@
+Fragment Twitter Client
+User Stories completed:
+
+Required:
+1. Includes all required user stories from Week 3 Twitter Client
+2. User can switch between Timeline and Mention views using tabs.
+3. User can view their home timeline tweets.
+4. User can view the recent mentions of their username.
+5. User can scroll to bottom of either of these lists and new tweets will load ("infinite scroll")
+6. Optional: Implemented tabs in a gingerbread-compatible approach using android Support v7
+7. User can navigate to view their own profile
+8. User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+9. User can click on the profile image in any tweet to see another user's profile.
+10. User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+11. Profile view includes that user's timeline
+
+Optional:
+12. Advanced: Robust error handling, check if internet is available, handle error cases, network failures
+13. Advanced: When a network request is sent, user sees an indeterminate progress indicator for profile view
+14. Advanced: User can "reply" to any tweet on their home timeline. The user that wrote the original tweet is automatically "@" replied in compose
+15. Advanced: User can click on a tweet to be taken to a "detail view" of that tweet
+16. Advanced: Improve the user interface and theme the app to feel twitter branded
+     - Made the UI look like twitter UI with colors, format and icons
+17. Advanced: User can search for tweets matching a particular query and see results (seeing issue with query string will try to fix)
+
+GIF walkthrough
+![alt tag](https://github.com/vvalluri/SimpleTwitterClient/blob/master/codepath-simpletwitterclient-fragments-1.gif)
+
+
+
+
 Simple Twitter Client
 
 User Stories:
