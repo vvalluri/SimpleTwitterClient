@@ -2,19 +2,20 @@ package com.codepath.apps.basictwitter;
 
 import org.json.JSONObject;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import com.codepath.apps.basictwitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class TweetComposeActivity extends Activity {
+public class TweetComposeActivity extends ActionBarActivity {
 	private EditText etTweet;
 	private TextView tvDisplay;
 	private TwitterClient Client;
@@ -32,10 +33,12 @@ public class TweetComposeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Progress bar support
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_tweet_compose);
 		// Custom action bar
-		ActionBar bar = getActionBar();
-		bar.setBackgroundDrawable(new ColorDrawable(Color.BLUE));
+		ActionBar bar = getSupportActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#55ACEE")));
 		bar.setTitle(" ");
 		
 		tvDisplay = (TextView) findViewById(R.id.tvDisplayLimit);
@@ -92,7 +95,8 @@ public class TweetComposeActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.miSendTweet) {
+			onTweetAction(item);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

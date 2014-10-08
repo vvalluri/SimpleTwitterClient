@@ -1,5 +1,8 @@
 package com.codepath.apps.basictwitter;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
@@ -43,21 +46,42 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
 	
-	// API to get home timeline
+	// API to get User credentials
 	public void getAccountCred(AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("account/verify_credentials.json");
-
-		// VV client.get and client.post. If no params pass null instead of params***
-		client.get(apiUrl, handler);
+		client.get(apiUrl, null, handler);
+	}
+	
+	// API to get User credentials
+	public void getUserInfo(String screenname, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("users/lookup.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenname);
+		client.get(apiUrl, params, handler);
+	}	
+	
+	// API to get User timeline
+	public void getUserTimeline(String screenname, long Maxid, long Sinceid, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count",  "8");
+		params.put("screen_name", screenname);
+		if ((Maxid != 0) || (Sinceid != 0)) {
+			if (Maxid != 0) {
+				params.put("max_id",  Long.toString(Maxid));
+			}
+			if (Sinceid != 0) {
+				params.put("since_id",  Long.toString(Sinceid));
+			}
+		} 
+		client.get(apiUrl, params, handler);
 	}
 	
 	// API to get home timeline
 	public void getHomeTimeLine(AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
-		//params.put("since_id",  "1");
 		params.put("count",  "8");
-		// VV client.get and client.post. If no params pass null instead of params***
 		client.get(apiUrl, params, handler);
 	}
 
@@ -66,8 +90,7 @@ public class TwitterClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
 		params.put("count",  "8");
-		//params.put("since_id",  "1");
-		//params.put("since_id", Integer.toString(Maxid));
+
 		if ((Maxid != 0) || (Sinceid != 0)) {
 			if (Maxid != 0) {
 				params.put("max_id",  Long.toString(Maxid));
@@ -75,11 +98,50 @@ public class TwitterClient extends OAuthBaseClient {
 			if (Sinceid != 0) {
 				params.put("since_id",  Long.toString(Sinceid));
 			}
-		} /* else {
-			params = null;
-		} */
-		// VV client.get and client.post. If no params pass null instead of params***
+		} 
+
 		client.get(apiUrl, params, handler);
+	}
+	
+	// API to get Mentions timeline
+	public void getMentionsLineNext(long Maxid, long Sinceid, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count",  "8");
+		if ((Maxid != 0) || (Sinceid != 0)) {
+			if (Maxid != 0) {
+				params.put("max_id",  Long.toString(Maxid));
+			}
+			if (Sinceid != 0) {
+				params.put("since_id",  Long.toString(Sinceid));
+			}
+		} 
+		client.get(apiUrl, params, handler);
+	}
+	
+	// API to get Search timeline
+	public void getSearchTimeline(String searchstr, long Maxid, long Sinceid, AsyncHttpResponseHandler handler) {
+		//"https://api.twitter.com/1.1/search/tweets.json?"
+		String apiUrl = getApiUrl("search/tweets.json?");
+		String searchUrlencoded;
+
+		RequestParams params = new RequestParams();
+		try {
+			searchUrlencoded = URLEncoder.encode(searchstr, "UTF-8");
+			params.put("q", searchUrlencoded);
+			params.put("count",  "8");
+			if ((Maxid != 0) || (Sinceid != 0)) {
+				if (Maxid != 0) {
+					params.put("max_id",  Long.toString(Maxid));
+				}
+				if (Sinceid != 0) {
+					params.put("since_id",  Long.toString(Sinceid));
+				}
+			} 
+			client.get(apiUrl, params, handler);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// API to update/post statuses to Twitter
@@ -87,7 +149,6 @@ public class TwitterClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("statuses/update.json");
 		RequestParams params = new RequestParams();
 		params.put("status",  tweet);
-		// VV client.get and client.post. If no params pass null instead of params***
 		client.post(apiUrl, params, handler);
 	}
 	
@@ -97,18 +158,7 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("status",  tweet);
 		params.put("in_reply_to_status_id",  Long.toString(reply_id));
-		// VV client.get and client.post. If no params pass null instead of params***
 		client.post(apiUrl, params, handler);
 	}
-	// CHANGE THIS
-	// DEFINE METHODS for different API endpoints here
-	/* public void getInterestingnessList(AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
-		// Can specify query string params directly or through RequestParams.
-		RequestParams params = new RequestParams();
-		params.put("format", "json");
-		client.get(apiUrl, params, handler);
-	} */
-
 
 }

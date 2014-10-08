@@ -113,11 +113,12 @@ public class Tweet extends Model implements Parcelable {
 					}
 				}
 			}
-			
-			if (jsonObject.optJSONObject("user") != null) {
-				if (jsonObject.getJSONObject("user").has("favourites_count")) {
-					tweet.favorite_count = jsonObject.getJSONObject("user").getInt("favourites_count");
-				}
+
+			if (jsonObject.has("favorite_count")) {
+				tweet.favorite_count = jsonObject.getInt("favorite_count");
+			}
+			if (jsonObject.has("retweet_count")) {
+				tweet.retweet_count = jsonObject.getInt("retweet_count");
 			}
 			// Since ActiveAndroid cannot allow duplicates for User uid, check if User already exists
 			// Reuse the user if exists. Since UID is unique we will take the first result (only one)

@@ -15,6 +15,17 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/TwitterActionBarBackground</item>
+    </style>
+    
+    <!--  Action Bar Backgroud color -->
+    <style name="TwitterActionBarBackground" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#55ACEE</item>
+        <item name="android:titleTextStyle">@style/TwitterTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="TwitterTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
 </resources>

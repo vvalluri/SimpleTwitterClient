@@ -1,14 +1,17 @@
 package com.codepath.apps.basictwitter;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,25 +20,26 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 
-public class TweetDisplayActivity extends Activity {
+public class TweetDisplayActivity extends ActionBarActivity {
 	private Tweet tweet;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Progress bar support
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_tweet_display);
 		
 		// Custom action bar
-		ActionBar bar = getActionBar();
-		bar.setBackgroundDrawable(new ColorDrawable(Color.BLUE));
-		bar.setTitle(" ");
+		ActionBar bar = getSupportActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#55ACEE")));
+		bar.setTitle("Tweet");
 		
         // Create global configuration and initialize ImageLoader with this configuration
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
         ImageLoader.getInstance().init(config);
         
 	    // Get the tweet object
-	    //tweet = (Tweet)getIntent().getSerializableExtra("tweet");
 		tweet = (Tweet)getIntent().getParcelableExtra("tweet");
 		populateTweetDisplay();
 	}
@@ -47,11 +51,36 @@ public class TweetDisplayActivity extends Activity {
 	       TextView tvTweetBody = (TextView) findViewById(R.id.tvTweetBody);
 	       TextView tvTweetUser = (TextView) findViewById(R.id.tvTweetDisplayUser);
 	       ImageView ivTweetPhoto = (ImageView) findViewById(R.id.ivTweetPhoto);
+	       TextView tvTweetreply = (TextView) findViewById(R.id.tvDisplayReply);
 	       
 	       // Populate the data into the template view using the data object
 	       tvTweetUserName.setText("@" + tweet.getUser().getScreenName());
 	       tvTweetUser.setText(tweet.getUser().getName());
 	       tvTweetBody.setText(tweet.getBody());
+	       
+	       // Reply handling
+	       tvTweetreply.setClickable(true);
+	       tvTweetreply.setTag(tweet.getUser().getUid());
+			// Set profile image on click listener
+	       tvTweetreply.setOnClickListener(new OnClickListener() {
+		        @Override
+		        public void onClick(View v) {
+		        	TextView tweetReply = (TextView) v.findViewById(R.id.tvDisplayReply);
+		        	if (tweetReply != null) {
+			        	//String user = (String)v.getTag();
+		        		String user = tweetReply.getTag().toString();
+		        		Log.d("debug", "Display view, Tweet reply tag: " + v.getTag() + " User: " + user);
+			        	//Intent intent = new Intent().setClass(v.getContext(), TweetReplyActivity.class);
+		        		Intent intent = new Intent(TweetDisplayActivity.this, TweetReplyActivity.class);
+			    		intent.putExtra("user", user);
+			    		// Start the new activity
+			    		v.getContext().startActivity(intent);
+		        	} else {
+		        		Log.d("debug", "Display click, profile image not found");
+		        	}
+		        }
+		      });
+			
 	       // populate and display image
 	       ivTweetProfileImage.setImageResource(android.R.color.transparent);
 	       ImageLoader imageLoader = ImageLoader.getInstance();
@@ -78,14 +107,15 @@ public class TweetDisplayActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.miReplyTweet) {
+			//onTweetReply();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
 	// OnCLick compose action
-	public void onTweetReply(MenuItem mi) {
+	public void onTweetReply() {
 		// Launch the Compose tweet activity
 		Intent i = new Intent(TweetDisplayActivity.this, TweetReplyActivity.class);
 		i.putExtra("tweet", tweet);

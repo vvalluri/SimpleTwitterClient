@@ -9,4 +9,24 @@
         <!-- API 14 theme customizations can go here. -->
     </style>
 
+    <style name="MyTwitterTheme" parent="@style/Theme.Base.AppCompat.Light.DarkActionBar">
+    <item name="android:actionBarTabBarStyle">@style/MyTwitterTheme.ActionBar.TabBar</item>
+    <item name="android:actionBarTabStyle">@style/MyTwitterTheme.ActionBar.TabView</item>
+    <item name="android:actionBarTabTextStyle">@style/MyTwitterTheme.ActionBar.TabText</item>
+	</style>
+	
+	<style name="MyTwitterTheme.ActionBar.TabBar" parent="android:style/Widget.Holo.Light.ActionBar.TabBar">
+	    <!-- This is an ORANGE background -->
+	    <item name="android:background">@drawable/tab_bar_background</item>
+	</style>
+	
+	<style name="MyTwitterTheme.ActionBar.TabView" parent="android:style/Widget.Holo.ActionBar.TabView">
+	    <!-- This is a GREEN background -->
+	    <item name="android:background">@drawable/tab_bar_background</item>
+	</style>
+	
+	<style name="MyTwitterTheme.ActionBar.TabText" parent="android:style/Widget.Holo.ActionBar.TabText">
+	    <!-- This is a WHITE tab color -->
+	    <item name="android:textColor">@color/Twitterblue</item>
+	</style>
 </resources>

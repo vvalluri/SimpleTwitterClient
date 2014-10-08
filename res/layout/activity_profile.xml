@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codepath.apps.basictwitter.ProfileActivity" >
+    
+    <RelativeLayout 
+        android:id="@+id/rlHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/TwitterDarkGray">
+        
+        <ImageView
+	        android:id="@+id/ivProfileImage2"
+	        android:layout_width="40dp"
+	        android:layout_height="40dp"
+	        android:layout_marginTop="10dp"
+			android:layout_centerHorizontal="true"
+	        android:src="@android:drawable/screen_background_light_transparent" />
+        
+        <TextView
+	        android:id="@+id/tvProfileName"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/ivProfileImage2"
+	        android:layout_centerHorizontal="true"
+	        android:text="Name"
+	        android:textSize="16sp" />
+        <TextView
+	        android:id="@+id/tvProfileScreenName"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/tvProfileName"
+	        android:text="ScreenName"
+	        android:layout_centerHorizontal="true"
+	        android:textSize="10sp"
+	        android:maxLines="1" />
+        
+        <TextView
+	        android:id="@+id/tvProfileTagline"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/tvProfileScreenName"
+	        android:text="TagLine"
+	        android:layout_centerHorizontal="true"
+	        android:textSize="10sp"
+	        android:maxLines="1" 
+	        android:maxLength="30"
+	        android:layout_marginBottom="10dp"
+		 />
+        
+    </RelativeLayout>
+    
+    <LinearLayout 
+       		android:id="@+id/llProfileCounts"
+            android:layout_width="match_parent"
+   			android:layout_height="wrap_content"
+   			android:layout_below="@+id/rlHeader"
+   			android:orientation="horizontal"
+   			android:background="@color/TwitterLightGray2" >
+   			
+       <TextView
+	        android:id="@+id/tvStatuses"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="9 statuses"
+	        android:layout_weight="1"
+	        android:textSize="16sp"
+	        android:layout_marginLeft="1dp"
+	        />
+       
+       <TextView
+	        android:id="@+id/tvFollowing"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="9 Following"
+	        android:layout_marginLeft="2dp"
+	        android:layout_weight="1"
+	        android:textSize="16sp"
+	         />
+               
+   		<TextView
+	        android:id="@+id/tvFollowers"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="9 Followers"
+	        android:layout_marginLeft="2dp"
+	        android:layout_weight="1"
+	        android:textSize="16sp"
+	        android:layout_marginRight="1dp"
+	         />       
+        
+    </LinearLayout>
+
+  <FrameLayout
+       android:id="@+id/fragmentUserTimeline"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/llProfileCounts"
+       tools:layout="@layout/fragment_tweets_list" >
+  </FrameLayout>
+
+</RelativeLayout>

@@ -5,18 +5,24 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ParseException;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.apps.basictwitter.ProfileActivity;
 import com.codepath.apps.basictwitter.R;
+import com.codepath.apps.basictwitter.TweetReplyActivity;
 import com.codepath.apps.basictwitter.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
@@ -45,6 +51,8 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		       holder.htweetTime = (TextView) convertView.findViewById(R.id.tvTime);
 		       holder.hivTweetImage = (ImageView) convertView.findViewById(R.id.ivTweetImg);
 		       holder.htvfav = (TextView) convertView.findViewById(R.id.tvFav);
+		       holder.htvRetweet = (TextView) convertView.findViewById(R.id.tvRetweet);
+		       holder.htvReply = (TextView) convertView.findViewById(R.id.tvReply);
 		       convertView.setTag(holder);
 	       }  else {
 	    	   holder = (ViewHolder) convertView.getTag();
@@ -56,32 +64,79 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
                    + "  " + "</b></font>"));
 	       //holder.htvUser.setText(tweet.getUser().getName());
 	       holder.htvUserName.setText("@" + tweet.getUser().getScreenName());
+	       
 	       holder.htvBody.setText(tweet.getBody());
 	       holder.htvBody.setMovementMethod(LinkMovementMethod.getInstance());
+	       //Typeface type = Typeface.createFromAsset(getContext().getAssets(),"fonts/Aaargh.ttf"); 
+	       //holder.htvBody.setTypeface(type);
+	       
+			// Get the create time
+			String postdate = getRelativeTimeAgo(tweet.getCreatedAt());
+			holder.htweetTime.setText(convertTimeStringtoShort(postdate));
+			
 	       // Favorite count
 	       if (tweet.favorite_count != 0) {
 	    	   holder.htvfav.setText(Integer.toString(tweet.getFavorite_count()));
 	       } else {
 	    	   holder.htvfav.setText("");
 	       }
-			// Get the create time
-			String postdate = getRelativeTimeAgo(tweet.getCreatedAt());
-			holder.htweetTime.setText(convertTimeStringtoShort(postdate));
+	       // Retweet count
+	       if (tweet.retweet_count != 0) {
+	    	   holder.htvRetweet.setText(Integer.toString(tweet.getRetweet_count()));
+	       } else {
+	    	   holder.htvRetweet.setText("");
+	       }
+	       // Tweet Reply
+			holder.htvReply.setTag(tweet.getUser().getUid());
+			holder.htvReply.setClickable(true);
+			// Set profile image on click listener
+			holder.htvReply.setOnClickListener(new OnClickListener() {
+		        @Override
+		        public void onClick(View v) {
+		        	TextView tweetReply = (TextView) v.findViewById(R.id.tvReply);
+		        	if (tweetReply != null) {
+			        	//String user = (String)v.getTag();
+		        		String user = tweetReply.getTag().toString();
+		        		Log.d("debug", "Adapter click, Tweet reply tag: " + v.getTag() + " User: " + user);
+			        	Intent intent = new Intent().setClass(v.getContext(), TweetReplyActivity.class);
+			    		intent.putExtra("user", user);
+			    		// Start the new activity
+			    		v.getContext().startActivity(intent);
+		        	} else {
+		        		Log.d("debug", "Adapter click, profile image not found");
+		        	}
+		        }
+		      });
 			
 	       // populate and display image
 			holder.hivProfileImage.setImageResource(android.R.color.transparent);
+
+			// Set tag for user time line view
+			holder.hivProfileImage.setTag(tweet.getUser().getScreenName());
+			holder.hivProfileImage.setClickable(true);
+			// Set profile image on click listener
+			holder.hivProfileImage.setOnClickListener(new OnClickListener() {
+		        @Override
+		        public void onClick(View v) {
+		          //Toast.makeText(activity, children, Toast.LENGTH_SHORT).show();
+		        	ImageView profileImg = (ImageView) v.findViewById(R.id.ivProfileImage);
+		        	if (profileImg != null) {
+			        	//String user = (String)v.getTag();
+		        		String user = profileImg.getTag().toString();
+		        		Log.d("debug", "Adapter click, profile image tag: " + v.getTag() + " User: " + user);
+			        	Intent intent = new Intent().setClass(v.getContext(), ProfileActivity.class);
+			    		intent.putExtra("user", user);
+			    		// Start the new activity
+			    		v.getContext().startActivity(intent);
+		        	} else {
+		        		Log.d("debug", "Adapter click, profile image not found");
+		        	}
+		        }
+		      });
+
 	       ImageLoader imageLoader = ImageLoader.getInstance();
-	       //imageLoader.init(ImageLoaderConfiguration.createDefault(getContext()));
 	       imageLoader.displayImage(tweet.getUser().getProfileImageUrl(), holder.hivProfileImage);
-	       /*
-	       if (tweet.mediaUrl != null) {
-	    	   holder.hivTweetImage.setImageResource(android.R.color.transparent);
-		       ImageLoader imageLoader2 = ImageLoader.getInstance();
-	    	   imageLoader2.displayImage(tweet.getMediaUrl(), holder.hivTweetImage);
-	       } else {
-	    	   holder.hivTweetImage.setVisibility(convertView.GONE);
-	       }
-	       */
+
 	       if (tweet.mediaUrl != null) {
 	    	   //holder.hivTweetImage.setImageResource(0);
 	    	   holder.hivTweetImage.setVisibility(convertView.VISIBLE);
@@ -102,6 +157,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		ImageView hivTweetImage;
 		TextView htvfav;
 		TextView htvReply;
+		TextView htvRetweet;
 	}
 	
 	// getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");

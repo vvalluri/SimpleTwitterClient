@@ -17,7 +17,7 @@
         android:allowBackup="true"
         android:icon="@drawable/circle_twitter"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/MyTwitterTheme" >
         <meta-data
             android:name="AA_DB_NAME"
             android:value="RestClient.db" />
@@ -64,6 +64,14 @@
         <activity
             android:name=".TweetReplyActivity"
             android:label="@string/title_activity_tweet_reply" >
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" >
+        </activity>
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/title_activity_search" >
         </activity>
     </application>
 

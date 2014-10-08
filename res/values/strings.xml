@@ -14,5 +14,7 @@
     <string name="title_activity_tweet_reply">TweetReplyActivity</string>
     <string name="lbl_time_str">Time String</string>
     <string name="lbl_content_descp">Profile image content</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
 
 </resources>

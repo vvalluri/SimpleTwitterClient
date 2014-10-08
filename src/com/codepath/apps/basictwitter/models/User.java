@@ -1,6 +1,5 @@
 package com.codepath.apps.basictwitter.models;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.json.JSONException;
@@ -31,6 +30,15 @@ public class User extends Model implements Parcelable {
 	public String screenName;
 	@Column(name = "profileImageUrl")
 	public String profileImageUrl;
+	@Column(name = "Description")
+	public String description;
+	@Column(name = "Followers")
+	public int followersCnt;
+	@Column(name = "Following")
+	public int followingCnt;
+	@Column(name = "Statuses")
+	public int statusesCnt;
+	
 
 	public User() {
 		super();
@@ -81,6 +89,22 @@ public class User extends Model implements Parcelable {
 			u.uid = json.getLong("id");
 			u.screenName = json.getString("screen_name");
 			u.profileImageUrl = json.getString("profile_image_url");
+			u.description = json.getString("description");
+			if (json.has("followers_count")) {
+				u.followersCnt = json.getInt("followers_count");
+			} else {
+				u.followersCnt = 0;
+			}
+			if (json.has("friends_count")) {
+				u.followingCnt = json.getInt("friends_count");
+			} else {
+				u.followersCnt = 0;
+			}
+			if (json.has("statuses_count")) {
+				u.statusesCnt = json.getInt("statuses_count");
+			} else {
+				u.statusesCnt = 0;
+			}
 			// Save to database
 			u.save();
 			ActiveAndroid.setTransactionSuccessful();
@@ -92,6 +116,38 @@ public class User extends Model implements Parcelable {
 	        ActiveAndroid.endTransaction();
 		}
 		return u;
+	}
+
+	public int getStatusesCnt() {
+		return statusesCnt;
+	}
+
+	public void setStatusesCnt(int statusesCnt) {
+		this.statusesCnt = statusesCnt;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getFollowingCnt() {
+		return followingCnt;
+	}
+
+	public void setFollowingCnt(int following_cnt) {
+		this.followingCnt = following_cnt;
+	}
+
+	public int getFollowersCnt() {
+		return followersCnt;
+	}
+
+	public void setFollowersCnt(int followers_cnt) {
+		this.followersCnt = followers_cnt;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 
 	public String getName() {
