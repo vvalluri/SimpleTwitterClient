@@ -18,6 +18,7 @@ Required:
 
 Optional:
 12. Advanced: Robust error handling, check if internet is available, handle error cases, network failures
+
 13. Advanced: When a network request is sent, user sees an indeterminate progress indicator for profile view
 14. Advanced: User can "reply" to any tweet on their home timeline. The user that wrote the original tweet is automatically "@" replied in compose
 15. Advanced: User can click on a tweet to be taken to a "detail view" of that tweet
