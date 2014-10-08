@@ -3,7 +3,9 @@ User Stories completed:
 
 Required:
 1. Includes all required user stories from Week 3 Twitter Client
+
 2. User can switch between Timeline and Mention views using tabs.
+
 3. User can view their home timeline tweets.
 4. User can view the recent mentions of their username.
 5. User can scroll to bottom of either of these lists and new tweets will load ("infinite scroll")
